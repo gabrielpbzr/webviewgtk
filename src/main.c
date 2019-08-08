@@ -23,21 +23,22 @@ int main(int argc, char** argv)
     
     WebKitWebView* webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
 
-    // Adiciona um container na janela principal para adicionar o webview
+    // Add a container to the main window to hold the webView
     gtk_container_add(GTK_CONTAINER(mainWindow), GTK_WIDGET(webView));
     
-    // Conecta o sinal de destruição da janela ativa para encerrar o programa
+    // Connect the closing signal of window to event of destroying the app
     g_signal_connect(mainWindow, "destroy", G_CALLBACK(destroyWindowCallback), NULL);
     
-    // Conecta o sinal de fechar o webview para destruir a janela ativa
+    // Connect the closing signal of webView widget to call window closing event
     g_signal_connect(webView, "close", G_CALLBACK(closeWebViewCallback), mainWindow);
     
-    // Carrega a página passada como parametro para o programa
+    // Load URI provided as an argument to the program
     webkit_web_view_load_uri(webView, argv[1]);
     
-    // Leva o foco direto para o webview
+    // Focus on webView
     gtk_widget_grab_focus(GTK_WIDGET(webView));
     
+    //Display all widgets of mainWindow
     gtk_widget_show_all(mainWindow);
     
     gtk_main();
